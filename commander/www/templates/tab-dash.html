@@ -1,12 +1,17 @@
 <ion-view view-title="Dashboard">
+  <ion-nav-buttons side="primary">
+    <button class="button" ng-click="connect()">
+      Connect
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
     <ion-list show-delete="false"
           show-reorder="false"
           can-swipe="true">
       <ion-item ng-repeat="item in items" ng-click="window.alert('yay')">
-          {{item}}
+          {{item.label}}
     <ion-option-button class="button-info"
-                       ng-click="edit(item)">
+                       ng-click="go('tab.dash({id:{{item.id}}})')">
       Edit
     </ion-option-button>
     <ion-delete-button class="ion-minus-circled"

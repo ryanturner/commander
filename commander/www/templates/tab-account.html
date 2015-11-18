@@ -1,9 +1,21 @@
-<ion-view view-title="Account">
+<ion-view view-title="Settings">
   <ion-content>
     <ion-list>
+    <label class="item item-input">
+      <span class="input-label">First Port's Pin Number</span>
+      <input type="number">
+    </label>
+    <label class="item item-input">
+      <span class="input-label">Number of Ports</span>
+      <input type="number">
+    </label>
     <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
+        Reverse Port Logic
     </ion-toggle>
+    <div class="item item-divider">
+      Bluetooth Device
+    </div>
+    <ion-radio ng-repeat="device in bluetoothDevices" ng-value="device" ng-model="selectedBluetoothDevice">{{ device.name }}</ion-radio>
     </ion-list>
   </ion-content>
 </ion-view>
