@@ -1,7 +1,10 @@
 angular.module('starter.controllers', ['ngCordova', 'ui.router'])
 
-.controller('DashCtrl', function($scope, $ionicPlatform, $cordovaBluetoothSerial, $state) {
-  $scope.items = [{"id":0,"label":"Test"},{"id":0,"label":"Test"},{"id":0,"label":"Test"}];
+.controller('DashCtrl', function($scope, $ionicPlatform, $cordovaBluetoothSerial, $state, Button, Trigger) {
+  $scope.buttons = [
+    new Button("Test Button", new Trigger([2], null, null, true)),
+    new Button("Test Button 2", new Trigger([3], null, null, true))
+  ];
   $scope.listCanSwipe = true;
   $scope.shouldShowReorder = true;
   $scope.shouldShowDelete = true;

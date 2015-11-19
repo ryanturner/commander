@@ -8,8 +8,8 @@
     <ion-list show-delete="false"
           show-reorder="false"
           can-swipe="true">
-      <ion-item ng-repeat="item in items" ng-click="window.alert('yay')">
-          {{item.label}}
+      <ion-item ng-repeat="button in buttons" ng-click="window.alert('yay')">
+          {{button.name}}
     <ion-option-button class="button-info"
                        ng-click="go('tab.dash({id:{{item.id}}})')">
       Edit
