@@ -47,4 +47,34 @@ angular.module('starter.services', [])
       return null;
     }
   };
+})
+
+.factory('DeviceState', function() {
+  var ports;
+  function DeviceState(firstPortPinNumber, numberOfPorts, reverseLogic) {
+    this.firstPortPinNumber = firstPortPinNumber;
+    this.numberOfPorts = numberOfPorts;
+    this.reverseLogic = reverseLogic;
+    ports = {};
+    for(i = firstPortPinNumber; i - firstPortPinNumber < numberOfPorts; i++) {
+      ports[i] = this.reverseLogic;
+    }
+  };
+  DeviceState.prototype.setPort = function(port, state) {
+    ports[port] = ( state && !this.reverseLogic ) || ( !state && this.reverseLogic );
+  };
+  DeviceState.prototype.setPortsWithTrigger = function(trigger) {
+    _.each(trigger.activateOutports, function(activateOutport) {
+      this.setPort(activateOutport, trigger.isActive);
+    }, this);
+  };
+  DeviceState.prototype.setPortsWithTriggers = function(triggers) {
+    _.each(triggers, function(trigger) {
+      this.setPortsWithTrigger(trigger);
+    }, this);
+  };
+  DeviceState.prototype.toString = function() {
+    return JSON.stringify(ports);
+  };
+  return DeviceState;
 });

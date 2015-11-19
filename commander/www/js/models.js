@@ -12,10 +12,17 @@ angular.module('commander.models', [])
 })
 
 .factory('Button', function(Trigger) {
-  function Button(name, trigger) {
+  function Button(name, trigger, callback) {
     this.name = name;
     this.trigger = trigger;
+    this.callback = callback
   }
+  Button.prototype.pressed = function() {
+    this.trigger.isActive = !this.trigger.isActive;
+    if(this.callback !== null) {
+      this.callback(this);
+    }
+  };
   return Button;
 })
 

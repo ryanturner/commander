@@ -16,7 +16,7 @@
     <ion-list show-delete="listSettings.showDelete"
           show-reorder="listSettings.showReorder"
           can-swipe="listSettings.canSwipe">
-      <ion-item ng-repeat="button in buttons" ng-class="{'commander-button-active': button.trigger.isActive}" ng-click="button.trigger.isActive = !button.trigger.isActive;">
+      <ion-item ng-repeat="button in buttons" ng-class="{'commander-button-active': button.trigger.isActive}" ng-click="button.pressed()">
           {{button.name}}
     <ion-option-button class="button-info"
                        ng-click="go('tab.dash({id:{{item.id}}})')">
