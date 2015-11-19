@@ -1,1 +1,7 @@
 /* Empty. Add your own CSS if you like */
+.commander-button-active .item-content {
+  border-color: #e42012;
+  background-color: #e42012;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}

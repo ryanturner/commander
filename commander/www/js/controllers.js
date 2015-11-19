@@ -2,33 +2,31 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router'])
 
 .controller('DashCtrl', function($scope, $ionicPlatform, $cordovaBluetoothSerial, $state, Button, Trigger) {
   $scope.buttons = [
-    new Button("Test Button", new Trigger([2], null, null, true)),
-    new Button("Test Button 2", new Trigger([3], null, null, true))
+    new Button("Test Button", new Trigger([2], null, null, true, false)),
+    new Button("Test Button 2", new Trigger([3], null, null, true, false))
   ];
-  $scope.listCanSwipe = true;
-  $scope.shouldShowReorder = true;
-  $scope.shouldShowDelete = true;
+  $scope.listSettings = {
+    canSwipe: true,
+    showReorder: false,
+    showDelete: false
+  };
+})
+
+.controller('AccountCtrl', function($scope, $ionicPlatform, $cordovaBluetoothSerial) {
+  $scope.settings = {
+    enableFriends: true
+  };
+  $scope.bluetoothDevices = [""];
+
   $ionicPlatform.ready(function() {
     console.log("ready");
-    $scope.liste = function() {
+    if(typeof $cordovaBluetoothSerial != "undefined") {
       $cordovaBluetoothSerial.list().then(function(result){
-        $scope.btlist = result;
-        console.log(result);
-        console.log("yay");
+        $scope.bluetoothDevices = result;
       },
       function(error) {
         console.log(error);
       });
     }
   });
-  $scope.go = function(path) {
-    $state.go(path);
-  };
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-  $scope.bluetoothDevices = [{"name":"test device"}, {"name":"test device 2"}];
 });
