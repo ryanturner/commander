@@ -14,6 +14,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
         }
       })
       .error(function(error) {
+        $cordovaToast.showShortBottom(error, 400);
         console.log(error);
       }
     );
@@ -32,6 +33,20 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
       deviceState.setPortsWithTrigger(buttons[buttonToDeactivate].trigger);
     });
     console.log(deviceState.toString());
+    $cordovaBluetoothSerial.isConnected().then(
+      function() {
+        $cordovaBluetoothSerial.write(deviceState.toString(), 
+          function() {
+          },
+          function() { // undo our changes because the write failed
+            buttonTriggerChangedCallback(button);
+          }
+        );
+      }, 
+      function() { //Undo our changes because we're not connected to wifi
+        buttonTriggerChangedCallback(button);
+      }
+    );
   };
   buttons = [
     new Button("Head Light Flashers", new Trigger(["2"], [], [], true, false), buttonTriggerChangedCallback),
@@ -61,12 +76,12 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
         function() {
           $cordovaBluetoothSerial.disconnect().then(
             function(success) {
-              $cordovaToast.showShortBottom("Disconnected!", 400)
+              $cordovaToast.showShortBottom("Disconnected!", 400);
               $scope.connectButton.text = "Connect";
               $scope.connectButton.isDisabled = false;
             },
             function(error) {
-              $cordovaToast.showShortBottom(error, 400)
+              $cordovaToast.showShortBottom(error, 400);
               $scope.connectButton.isDisabled = false;
             }
           );
@@ -92,7 +107,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
   };
 })
 
-.controller('AccountCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaBluetoothSerial, $cordovaPreferences) {
+.controller('AccountCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaBluetoothSerial, $cordovaPreferences, $cordovaToast) {
   $scope.bluetoothDevices = [""];
 
   $ionicPlatform.ready(function() {
@@ -101,6 +116,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
         $scope.bluetoothDevices = result;
       },
       function(error) {
+        $cordovaToast.showShortBottom(error, 400);
         console.log(error);
       });
     }
