@@ -39,12 +39,12 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
           function() {
           },
           function() { // undo our changes because the write failed
-            buttonTriggerChangedCallback(button);
+            $cordovaToast.showShortBottom("Failed to send command to device", 400);
           }
         );
       }, 
       function() { //Undo our changes because we're not connected to wifi
-        buttonTriggerChangedCallback(button);
+        $cordovaToast.showShortBottom("Connect to a device first", 400);
       }
     );
   };
@@ -72,37 +72,41 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     text: "Connect",
     isDisabled: false,
     click: function() {
-      $cordovaBluetoothSerial.isConnected().then(
-        function() {
-          $cordovaBluetoothSerial.disconnect().then(
-            function(success) {
-              $cordovaToast.showShortBottom("Disconnected!", 400);
-              $scope.connectButton.text = "Connect";
-              $scope.connectButton.isDisabled = false;
-            },
-            function(error) {
-              $cordovaToast.showShortBottom(error, 400);
-              $scope.connectButton.isDisabled = false;
-            }
-          );
-        },
-        function() {
-          $scope.connectButton.text = "Connecting...";
-          $scope.connectButton.isDisabled = true;
-          $cordovaBluetoothSerial.connect($rootScope.deviceState.bluetoothDevice).then(
-            function(success) {
-              $cordovaToast.showShortBottom("Connected!", 400);
-              $scope.connectButton.text = "Disconnect";
-              $scope.connectButton.isDisabled = false;
-            }, 
-            function(error) {
-              $cordovaToast.showShortBottom(error, 400);
-              $scope.connectButton.text = "Connect";
-              $scope.connectButton.isDisabled = false;
-            }
-          );
-        }
-      )
+      if($rootScope.deviceState.bluetoothDevice != null) {
+        $cordovaBluetoothSerial.isConnected().then(
+          function() {
+            $cordovaBluetoothSerial.disconnect().then(
+              function(success) {
+                $cordovaToast.showShortBottom("Disconnected!", 400);
+                $scope.connectButton.text = "Connect";
+                $scope.connectButton.isDisabled = false;
+              },
+              function(error) {
+                $cordovaToast.showShortBottom(error, 400);
+                $scope.connectButton.isDisabled = false;
+              }
+            );
+          },
+          function() {
+            $scope.connectButton.text = "Connecting...";
+            $scope.connectButton.isDisabled = true;
+            $cordovaBluetoothSerial.connect($rootScope.deviceState.bluetoothDevice).then(
+              function(success) {
+                $cordovaToast.showShortBottom("Connected!", 400);
+                $scope.connectButton.text = "Disconnect";
+                $scope.connectButton.isDisabled = false;
+              }, 
+              function(error) {
+                $cordovaToast.showShortBottom(error, 400);
+                $scope.connectButton.text = "Connect";
+                $scope.connectButton.isDisabled = false;
+              }
+            );
+          }
+        )
+      } else {
+        $cordovaToast.showShortBottom("Please select a bluetooth device first.", 400);
+      }
     }
   };
 })

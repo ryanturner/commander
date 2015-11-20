@@ -1,27 +1,23 @@
 <ion-view view-title="Dashboard">
   <ion-nav-buttons side="primary">
-    <button class="button" ng-click="connectButton.click()" ng-model="connectButton" ng-disabled="connectButton.isDisabled">
+    <button class="button button-positive" ng-click="connectButton.click()" ng-model="connectButton" ng-disabled="connectButton.isDisabled">
       {{ connectButton.text }}
     </button>
   </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
-    <button class="button button-clear" ng-click="listSettings.canSwipe = !listSettings.canSwipe; listSettings.showReorder = !listSettings.showReorder; listSettings.canSwipe = !listSettings.canSwipe;">
+    <button class="button button-clear" ng-click="listSettings.showReorder = !listSettings.showReorder; listSettings.showDelete = !listSettings.showDelete;">
       Rearrange
-    </button>
-    <button class="button button-clear" ng-click="listSettings.canSwipe = !listSettings.canSwipe;">
-      Edit
     </button>
   </ion-nav-buttons>
   <ion-content class="padding">
     <ion-list show-delete="listSettings.showDelete"
           show-reorder="listSettings.showReorder"
           can-swipe="listSettings.canSwipe">
-      <ion-item ng-repeat="button in buttons" ng-class="{'commander-button-active': button.trigger.isActive}" ng-click="button.pressed()">
+      <ion-item ng-repeat="button in buttons" class="item-button-right">
           {{button.name}}
-    <ion-option-button class="button-info"
-                       ng-click="go('tab.dash({id:{{item.id}}})')">
-      Edit
-    </ion-option-button>
+          <button class="button" ng-class="{'button-assertive': button.trigger.isActive}" ng-click="button.pressed()">
+            <i class="icon ion-android-bulb"></i>
+          </button>
     <ion-delete-button class="ion-minus-circled"
                        ng-click="items.splice($index, 1)">
     </ion-delete-button>
@@ -30,5 +26,8 @@
     </ion-reorder-button>
       </ion-item>
     </ion-list>
+    <button class="button button-full button-light">
+      Add
+    </button>
   </ion-content>
 </ion-view>
