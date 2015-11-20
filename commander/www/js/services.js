@@ -57,11 +57,12 @@ angular.module('starter.services', [])
     this.reverseLogic = reverseLogic;
     ports = {};
     for(i = firstPortPinNumber; i - firstPortPinNumber < numberOfPorts; i++) {
-      ports[i] = this.reverseLogic;
+      this.setPort(i, false);
     }
   };
   DeviceState.prototype.setPort = function(port, state) {
-    ports[port] = ( state && !this.reverseLogic ) || ( !state && this.reverseLogic );
+    portValue = ( state && !this.reverseLogic ) || ( !state && this.reverseLogic )
+    ports[port] = portValue ? 1 : 0;
   };
   DeviceState.prototype.setPortsWithTrigger = function(trigger) {
     _.each(trigger.activateOutports, function(activateOutport) {
