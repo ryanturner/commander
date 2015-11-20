@@ -1,8 +1,23 @@
 angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
 
-.controller('DashCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaBluetoothSerial, $state, Button, Trigger, DeviceState) {
+.controller('DashCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaPreferences, $cordovaBluetoothSerial, $state, Button, Trigger, DeviceState, $cordovaToast) {
   var deviceState = new DeviceState(2, 8, true);
   $rootScope.deviceState = deviceState;
+  $ionicPlatform.ready(function() {
+    $cordovaPreferences.fetch('deviceState')
+      .success(function(value) {
+        if(value != null) {
+          $rootScope.deviceState.firstPortPinNumber = value.firstPortPinNumber;
+          $rootScope.deviceState.numberOfPorts = value.numberOfPorts;
+          $rootScope.deviceState.reverseLogic = value.reverseLogic;
+          $rootScope.deviceState.bluetoothDevice = value.bluetoothDevice;
+        }
+      })
+      .error(function(error) {
+        console.log(error);
+      }
+    );
+  });
   var buttons;
   var buttonTriggerChangedCallback = function(button) {
     deviceState.setPortsWithTrigger(button.trigger);
@@ -38,6 +53,43 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     showReorder: false,
     showDelete: false
   };
+  $scope.connectButton = {
+    text: "Connect",
+    isDisabled: false,
+    click: function() {
+      $cordovaBluetoothSerial.isConnected().then(
+        function() {
+          $cordovaBluetoothSerial.disconnect().then(
+            function(success) {
+              $cordovaToast.showShortBottom("Disconnected!", 400)
+              $scope.connectButton.text = "Connect";
+              $scope.connectButton.isDisabled = false;
+            },
+            function(error) {
+              $cordovaToast.showShortBottom(error, 400)
+              $scope.connectButton.isDisabled = false;
+            }
+          );
+        },
+        function() {
+          $scope.connectButton.text = "Connecting...";
+          $scope.connectButton.isDisabled = true;
+          $cordovaBluetoothSerial.connect($rootScope.deviceState.bluetoothDevice).then(
+            function(success) {
+              $cordovaToast.showShortBottom("Connected!", 400);
+              $scope.connectButton.text = "Disconnect";
+              $scope.connectButton.isDisabled = false;
+            }, 
+            function(error) {
+              $cordovaToast.showShortBottom(error, 400);
+              $scope.connectButton.text = "Connect";
+              $scope.connectButton.isDisabled = false;
+            }
+          );
+        }
+      )
+    }
+  };
 })
 
 .controller('AccountCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaBluetoothSerial, $cordovaPreferences) {
@@ -52,19 +104,6 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
         console.log(error);
       });
     }
-    $cordovaPreferences.fetch('deviceState')
-      .success(function(value) { 
-        if(value != null) {
-          $rootScope.deviceState.firstPortPinNumber = value.firstPortPinNumber;
-          $rootScope.deviceState.numberOfPorts = value.numberOfPorts;
-          $rootScope.deviceState.reverseLogic = value.reverseLogic;
-          $rootScope.deviceState.bluetoothDevice = value.bluetoothDevice;
-        }
-      })
-      .error(function(error) {
-        console.log(error);
-        window.alert(error);
-      });
   });
   $scope.$on('$ionicView.beforeLeave', function(){
     $cordovaPreferences.store('deviceState', $rootScope.deviceState);

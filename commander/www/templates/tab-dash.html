@@ -1,7 +1,7 @@
 <ion-view view-title="Dashboard">
   <ion-nav-buttons side="primary">
-    <button class="button" ng-click="connect()">
-      Connect
+    <button class="button" ng-click="connectButton.click()" ng-model="connectButton" ng-disabled="connectButton.isDisabled">
+      {{ connectButton.text }}
     </button>
   </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
