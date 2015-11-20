@@ -23,6 +23,9 @@ angular.module('commander.models', [])
       this.callback(this);
     }
   };
+  Button.prototype.callback = function() {
+    return this.callback(this);
+  };
   return Button;
 })
 

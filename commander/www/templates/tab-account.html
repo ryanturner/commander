@@ -3,19 +3,19 @@
     <ion-list>
     <label class="item item-input">
       <span class="input-label">First Port's Pin Number</span>
-      <input type="number">
+      <input type="number" ng-model="deviceState.firstPortPinNumber">
     </label>
     <label class="item item-input">
       <span class="input-label">Number of Ports</span>
-      <input type="number">
+      <input type="number" ng-model="deviceState.numberOfPorts">
     </label>
-    <ion-toggle  ng-model="settings.enableFriends">
+    <ion-toggle  ng-model="deviceState.reverseLogic">
         Reverse Port Logic
     </ion-toggle>
     <div class="item item-divider">
       Bluetooth Device
     </div>
-    <ion-radio ng-repeat="device in bluetoothDevices" ng-value="device" ng-model="selectedBluetoothDevice">{{ device.name }}</ion-radio>
+    <ion-radio ng-repeat="device in bluetoothDevices" ng-value="device.address" ng-model="deviceState.bluetoothDevice">{{ device.name }}</ion-radio>
     </ion-list>
   </ion-content>
 </ion-view>
