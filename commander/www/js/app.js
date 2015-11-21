@@ -55,10 +55,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+        controller: 'SettingsCtrl'
       }
     }
-  });
+  })
+  
+  .state('tab.button-details', {
+    url: '/dash/:index',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/edit-button.html',
+        controller: 'EditButtonCtrl'
+      }
+    }
+  }); 
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');

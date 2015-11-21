@@ -55,14 +55,14 @@ angular.module('starter.services', [])
     this.firstPortPinNumber = firstPortPinNumber;
     this.numberOfPorts = numberOfPorts;
     this.reverseLogic = reverseLogic;
-    ports = {};
+    this.ports = {};
     for(i = firstPortPinNumber; i - firstPortPinNumber < numberOfPorts; i++) {
       this.setPort(i, false);
     }
   };
   DeviceState.prototype.setPort = function(port, state) {
     portValue = ( state && !this.reverseLogic ) || ( !state && this.reverseLogic )
-    ports[port] = portValue ? 1 : 0;
+    this.ports[port] = portValue ? 1 : 0;
   };
   DeviceState.prototype.setPortsWithTrigger = function(trigger) {
     _.each(trigger.activateOutports, function(activateOutport) {
@@ -75,7 +75,7 @@ angular.module('starter.services', [])
     }, this);
   };
   DeviceState.prototype.toString = function() {
-    return JSON.stringify(ports);
+    return JSON.stringify(this.ports);
   };
   return DeviceState;
 });

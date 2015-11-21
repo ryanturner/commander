@@ -19,17 +19,16 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
       }
     );
   });
-  var buttons;
   var buttonTriggerChangedCallback = function(button) {
     deviceState.setPortsWithTrigger(button.trigger);
     _.each(button.trigger.activateButtons, function(buttonToActivate) {
-      buttons[buttonToActivate].trigger.isActive = button.trigger.isActive;
-      buttons[buttonToActivate].callback;
-      deviceState.setPortsWithTrigger(buttons[buttonToActivate].trigger);
+      deviceState.buttons[buttonToActivate].trigger.isActive = button.trigger.isActive;
+      deviceState.buttons[buttonToActivate].callback;
+      deviceState.setPortsWithTrigger(deviceState.buttons[buttonToActivate].trigger);
     });
     _.each(button.trigger.deactivateButtons, function(buttonToDeactivate) {
-      buttons[buttonToDeactivate].trigger.isActive = !button.trigger.isActive;
-      buttons[buttonToActivate].callback;
+      deviceState.buttons[buttonToDeactivate].trigger.isActive = !button.trigger.isActive;
+      deviceState.buttons[buttonToActivate].callback;
       deviceState.setPortsWithTrigger(buttons[buttonToDeactivate].trigger);
     });
     console.log(deviceState.toString());
@@ -48,7 +47,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
       }
     );
   };
-  buttons = [
+  deviceState.buttons = [
     new Button("Head Light Flashers", new Trigger(["2"], [], [], true, false), buttonTriggerChangedCallback),
     new Button("Brake Light Flashers", new Trigger(["3"], [], [], true, false), buttonTriggerChangedCallback),
     new Button("License Plate Amber", new Trigger(["5"], [], [], true, false), buttonTriggerChangedCallback),
@@ -57,8 +56,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     new Button("Front Emergency", new Trigger([], [0], [], true, false), buttonTriggerChangedCallback),
     new Button("Emergency", new Trigger([], [0, 1, 3, 4, 5], [], true, false), buttonTriggerChangedCallback)
   ];
-  deviceState.setPortsWithTriggers(_.map(buttons, function(val) { return val.trigger; }));
-  $scope.buttons = buttons;
+  deviceState.setPortsWithTriggers(_.map(deviceState.buttons, function(val) { return val.trigger; }));
 //  $scope.$watch('buttons', function(newObject, oldObject) {
 //    deviceState.setPortsWithTriggers(_.map(newObject, function(val) { return val.trigger; }));
 //    console.log(deviceState.toString());
@@ -67,6 +65,9 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     canSwipe: true,
     showReorder: false,
     showDelete: false
+  };
+  $scope.editButton = function(buttonIndex) {
+    $cordovaToast.showShortBottom(buttonIndex, 400);
   };
   $scope.connectButton = {
     text: "Connect",
@@ -111,7 +112,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
   };
 })
 
-.controller('AccountCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaBluetoothSerial, $cordovaPreferences, $cordovaToast) {
+.controller('SettingsCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaBluetoothSerial, $cordovaPreferences, $cordovaToast) {
   $scope.bluetoothDevices = [""];
 
   $ionicPlatform.ready(function() {
@@ -128,4 +129,11 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
   $scope.$on('$ionicView.beforeLeave', function(){
     $cordovaPreferences.store('deviceState', $rootScope.deviceState);
   });
+})
+
+.controller('EditButtonCtrl', function($scope, $rootScope, $stateParams, $ionicHistory){
+  $scope.button = $rootScope.deviceState.buttons[$stateParams.index];
+  $scope.commanderGoBack = function() {
+    $ionicHistory.goBack();
+  };
 });

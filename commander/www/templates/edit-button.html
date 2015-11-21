@@ -9,26 +9,23 @@
         <label class="item item-input item-select">
           <span class="input-label">Ports to Enable</span>
           <select multiple ng-model="button.trigger.activateOutports">
-            <option ng-repeat="port in ports" value="{{ port }}">{{ port }}</option>
+            <option ng-repeat="port in deviceState.ports" value="{{ $index }}">{{ $index }}</option>
           </select>
         </label>
         <label class="item item-input item-select">
           <span class="input-label">Buttons to Enable</span>
           <select multiple ng-model="button.trigger.activateButtons">
-            <option ng-repeat="button in buttons" value="{{ button }}">{{ button }}</option>
+            <option ng-repeat="button in deviceState.buttons" value="{{ $index }}">{{ button.name }}</option>
           </select>
         </label>
         <label class="item item-input item-select">
           <span class="input-label">Buttons to Disable</span>
           <select multiple ng-model="button.trigger.deactivateButtons">
-            <option ng-repeat="button in buttons" value="{{ button }}">{{ button }}</option>
+            <option ng-repeat="button in deviceState.buttons" value="{{ $index }}">{{ button.name }}</option>
           </select>
         </label>
 
       </ion-list>
-      <div class="padding">
-        <button type="submit" class="button button-positive">Save</button>
-      </div>
     </form>
   </ion-content>
 </ion-view>
