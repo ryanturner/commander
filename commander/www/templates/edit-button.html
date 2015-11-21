@@ -1,0 +1,34 @@
+<ion-view view-title="Button">
+  <ion-content>
+    <form ng-submit="saveButton">
+      <ion-list>
+        <label class="item item-input">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="button.name" required />
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Ports to Enable</span>
+          <select multiple ng-model="button.trigger.activateOutports">
+            <option ng-repeat="port in ports" value="{{ port }}">{{ port }}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Buttons to Enable</span>
+          <select multiple ng-model="button.trigger.activateButtons">
+            <option ng-repeat="button in buttons" value="{{ button }}">{{ button }}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Buttons to Disable</span>
+          <select multiple ng-model="button.trigger.deactivateButtons">
+            <option ng-repeat="button in buttons" value="{{ button }}">{{ button }}</option>
+          </select>
+        </label>
+
+      </ion-list>
+      <div class="padding">
+        <button type="submit" class="button button-positive">Save</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
