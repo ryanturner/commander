@@ -18,12 +18,10 @@ angular.module('commander.models', [])
     this.callback = callback
   }
   Button.prototype.pressed = function() {
-    console.log("Button was pressed");
-/*    this.trigger.isActive = !this.trigger.isActive;
+    this.trigger.isActive = !this.trigger.isActive;
     if(this.callback !== null) {
       this.callback(this);
-      console.log("Callback was called");
-    } */
+    }
   };
   Button.prototype.callback = function() {
     return this.callback(this);
