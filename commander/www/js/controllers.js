@@ -13,7 +13,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
           $rootScope.deviceState.bluetoothDevice = value.bluetoothDevice;
           $rootScope.deviceState.buttons = value.buttons;
         } else {
-          deviceState.buttons = [
+          $rootScope.deviceState.buttons = [
             new Button("Head Light Flashers", new Trigger(["2"], [], [], true, false), buttonTriggerChangedCallback),
             new Button("Brake Light Flashers", new Trigger(["3"], [], [], true, false), buttonTriggerChangedCallback),
             new Button("License Plate Amber", new Trigger(["5"], [], [], true, false), buttonTriggerChangedCallback),
@@ -22,16 +22,27 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
             new Button("Front Emergency", new Trigger([], [0], [], true, false), buttonTriggerChangedCallback),
             new Button("Emergency", new Trigger([], [0, 1, 3, 4, 5], [], true, false), buttonTriggerChangedCallback)
           ];
-          deviceState.setPortsWithTriggers(_.map(deviceState.buttons, function(val) { return val.trigger; }));
         }
+        deviceState.setPortsWithTriggers(_.map(deviceState.buttons, function(val) { return val.trigger; }));
+        deviceState.buttons = $rootScope.deviceState.buttons;
       })
       .error(function(error) {
+        $rootScope.deviceState.buttons = [
+            new Button("Head Light Flashers", new Trigger(["2"], [], [], true, false), buttonTriggerChangedCallback),
+            new Button("Brake Light Flashers", new Trigger(["3"], [], [], true, false), buttonTriggerChangedCallback),
+            new Button("License Plate Amber", new Trigger(["5"], [], [], true, false), buttonTriggerChangedCallback),
+            new Button("License Plate Red", new Trigger(["6"], [], [], true, false), buttonTriggerChangedCallback),
+            new Button("Rear Emergency", new Trigger([], [3, 1], [], true, false), buttonTriggerChangedCallback),
+            new Button("Front Emergency", new Trigger([], [0], [], true, false), buttonTriggerChangedCallback),
+            new Button("Emergency", new Trigger([], [0, 1, 3, 4, 5], [], true, false), buttonTriggerChangedCallback)
+          ];
         $cordovaToast.showShortBottom(error, 400);
         console.log(error);
       }
     );
   });
   var buttonTriggerChangedCallback = function(button) {
+    console.log("button trigger callback called");
     deviceState.setPortsWithTrigger(button.trigger);
     _.each(button.trigger.activateButtons, function(buttonToActivate) {
       deviceState.buttons[buttonToActivate].trigger.isActive = button.trigger.isActive;
