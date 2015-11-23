@@ -148,4 +148,9 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     console.log("Going back, saving state");
     $cordovaPreferences.store('deviceState', $rootScope.deviceState);
   });
+  $scope.deleteButton = function() {
+    $rootScope.deviceState.removeButtonAtIndex($stateParams.index);
+    $cordovaPreferences.store('deviceState', $rootScope.deviceState);
+    $ionicHistory.goBack();
+  };
 });

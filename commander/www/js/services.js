@@ -77,5 +77,24 @@ angular.module('starter.services', [])
   DeviceState.prototype.toString = function() {
     return JSON.stringify(this.ports);
   };
+  DeviceState.prototype.removeButtonAtIndex = function(index) {
+    _.each(this.buttons, function(button, i) {
+      _.each(button.trigger.activateButtons, function(activateButton, j) {
+        if(activateButton > index) {
+          this.buttons[i].trigger.activateButtons[j]--;
+        } else if(activateButton == index) {
+          this.buttons[i].trigger.activateButtons.splice(j, 1);
+        }
+      }, this);
+      _.each(button.trigger.deactivateButtons, function(deactivateButton, j) {
+        if(deactivateButton > index) {
+          this.buttons[i].trigger.deactivateButtons[j]--;
+        } else if(deactivateButton == index) {
+          this.buttons[i].trigger.deactivateButtons.splice(j, 1);
+        }
+      }, this);
+    }, this);
+    this.buttons.splice(index, 1);
+  };
   return DeviceState;
 });
