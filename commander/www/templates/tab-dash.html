@@ -15,9 +15,9 @@
           can-swipe="listSettings.canSwipe">
       <ion-item ng-repeat="button in deviceState.buttons" class="item">
           <a class="button button-clear button-positive" href="#/tab/dash/{{ $index }}">{{button.name}}</a>
-          <button class="button float-right" ng-class="{'button-assertive': button.trigger.isActive}" ng-click="button.pressed()">
+          <a class="button float-right" ng-class="{'button-assertive': button.trigger.isActive}" ng-click="buttonClicked(button)">
             <i class="icon ion-android-bulb"></i>
-          </button>
+          </a>
     <ion-delete-button class="ion-minus-circled"
                        ng-click="items.splice($index, 1)">
     </ion-delete-button>

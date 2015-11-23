@@ -2,6 +2,10 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
 
 .controller('DashCtrl', function($rootScope, $scope, $ionicPlatform, $cordovaPreferences, $cordovaBluetoothSerial, $state, Button, Trigger, DeviceState, $cordovaToast) {
   var deviceState = new DeviceState(2, 8, true);
+  $scope.buttonClicked = function(button) {
+    button.trigger.isActive = !button.trigger.isActive;
+    buttonTriggerChangedCallback(button);
+  };
   $rootScope.deviceState = deviceState;
   $ionicPlatform.ready(function() {
     $cordovaPreferences.fetch('deviceState')
@@ -27,15 +31,6 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
         deviceState.buttons = $rootScope.deviceState.buttons;
       })
       .error(function(error) {
-        $rootScope.deviceState.buttons = [
-            new Button("Head Light Flashers", new Trigger(["2"], [], [], true, false), buttonTriggerChangedCallback),
-            new Button("Brake Light Flashers", new Trigger(["3"], [], [], true, false), buttonTriggerChangedCallback),
-            new Button("License Plate Amber", new Trigger(["5"], [], [], true, false), buttonTriggerChangedCallback),
-            new Button("License Plate Red", new Trigger(["6"], [], [], true, false), buttonTriggerChangedCallback),
-            new Button("Rear Emergency", new Trigger([], [3, 1], [], true, false), buttonTriggerChangedCallback),
-            new Button("Front Emergency", new Trigger([], [0], [], true, false), buttonTriggerChangedCallback),
-            new Button("Emergency", new Trigger([], [0, 1, 3, 4, 5], [], true, false), buttonTriggerChangedCallback)
-          ];
         $cordovaToast.showShortBottom(error, 400);
         console.log(error);
       }
@@ -46,12 +41,12 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     deviceState.setPortsWithTrigger(button.trigger);
     _.each(button.trigger.activateButtons, function(buttonToActivate) {
       deviceState.buttons[buttonToActivate].trigger.isActive = button.trigger.isActive;
-      deviceState.buttons[buttonToActivate].callback;
+      //deviceState.buttons[buttonToActivate].callback;
       deviceState.setPortsWithTrigger(deviceState.buttons[buttonToActivate].trigger);
     });
     _.each(button.trigger.deactivateButtons, function(buttonToDeactivate) {
       deviceState.buttons[buttonToDeactivate].trigger.isActive = !button.trigger.isActive;
-      deviceState.buttons[buttonToActivate].callback;
+      //deviceState.buttons[buttonToActivate].callback;
       deviceState.setPortsWithTrigger(buttons[buttonToDeactivate].trigger);
     });
     console.log(deviceState.toString());
@@ -146,7 +141,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
 
 .controller('EditButtonCtrl', function($scope, $rootScope, $stateParams, $ionicHistory, $cordovaPreferences, Button, Trigger){
   if($stateParams.index >= $rootScope.deviceState.buttons.length) { //Its new, so add a new button
-    $rootScope.deviceState.buttons.push(new Button("", new Trigger([], [], [], true, false), null));
+    $rootScope.deviceState.buttons.push(new Button("", new Trigger([], [], [], true, false)));
   }
   $scope.button = $rootScope.deviceState.buttons[$stateParams.index];
   $scope.$on('$ionicView.beforeLeave', function() {
