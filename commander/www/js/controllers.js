@@ -144,10 +144,13 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
   });
 })
 
-.controller('EditButtonCtrl', function($scope, $rootScope, $stateParams, $ionicHistory, $cordovaPreferences){
+.controller('EditButtonCtrl', function($scope, $rootScope, $stateParams, $ionicHistory, $cordovaPreferences, Button, Trigger){
+  if($stateParams.index >= $rootScope.deviceState.buttons.length) { //Its new, so add a new button
+    $rootScope.deviceState.buttons.push(new Button("", new Trigger([], [], [], true, false), null));
+  }
   $scope.button = $rootScope.deviceState.buttons[$stateParams.index];
-  $scope.commanderGoBack = function() {
+  $scope.$on('$ionicView.beforeLeave', function() {
+    console.log("Going back, saving state");
     $cordovaPreferences.store('deviceState', $rootScope.deviceState);
-    $ionicHistory.goBack();
-  };
+  });
 });
