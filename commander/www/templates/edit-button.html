@@ -24,7 +24,9 @@
             <option ng-repeat="button in deviceState.buttons" value="{{ $index }}">{{ button.name }}</option>
           </select>
         </label>
-
+        <div class="item item-button">
+          <button class="button button-assertive button-block" ng-click="">Delete</button>
+        </div>
       </ion-list>
     </form>
   </ion-content>
