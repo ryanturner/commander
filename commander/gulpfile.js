@@ -66,7 +66,7 @@ gulp.task('test', function (done) {
 gulp.task('lint', function() {
   return gulp.src('./www/js/*.js')
     .pipe(jshint())
-//    .pipe(jscs())
-//    .pipe(stylish.combineWithHintResults())
+    .pipe(jscs())
+    .pipe(stylish.combineWithHintResults())
     .pipe(jshint.reporter('jshint-stylish'));
 });
