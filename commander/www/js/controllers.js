@@ -10,7 +10,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
   $ionicPlatform.ready(function() {
     $cordovaPreferences.fetch('deviceState')
       .success(function(value) {
-        if(value != null) {
+        if(value !== null) {
           $rootScope.deviceState.firstPortPinNumber = value.firstPortPinNumber;
           $rootScope.deviceState.numberOfPorts = value.numberOfPorts;
           $rootScope.deviceState.reverseLogic = value.reverseLogic;
@@ -75,7 +75,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     text: "Connect",
     isDisabled: false,
     click: function() {
-      if($rootScope.deviceState.bluetoothDevice != null) {
+      if($rootScope.deviceState.bluetoothDevice !== null) {
         $cordovaBluetoothSerial.isConnected().then(
           function() {
             $cordovaBluetoothSerial.disconnect().then(
@@ -106,7 +106,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
               }
             );
           }
-        )
+        );
       } else {
         $cordovaToast.showShortBottom("Please select a bluetooth device first.", 400);
       }

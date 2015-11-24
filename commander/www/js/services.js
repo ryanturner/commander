@@ -10,9 +10,9 @@ angular.module('starter.services', [])
     for(i = firstPortPinNumber; i - firstPortPinNumber < numberOfPorts; i++) {
       this.setPort(i, false);
     }
-  };
+  }
   DeviceState.prototype.setPort = function(port, state) {
-    portValue = ( state && !this.reverseLogic ) || ( !state && this.reverseLogic )
+    portValue = (state && !this.reverseLogic) || (!state && this.reverseLogic);
     this.ports[port] = portValue ? 1 : 0;
   };
   DeviceState.prototype.setPortsWithTrigger = function(trigger) {
