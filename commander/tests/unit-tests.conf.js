@@ -18,6 +18,7 @@ module.exports = function(config) {
       'www/lib/ionic/js/ionic.bundle.js',
       'www/lib/angular/angular.js',
       'www/lib/angular-mocks/angular-mocks.js',
+      'www/lib/underscore/underscore-min.js',
       'www/js/*.js',
       'tests/unit-tests/**/*.js',
 //      'www/lib/*/*.js'
@@ -33,7 +34,6 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
