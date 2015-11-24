@@ -2,7 +2,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
 
 .controller('DashCtrl', function($rootScope, $scope, $ionicPlatform,
   $cordovaPreferences, $cordovaBluetoothSerial, $state, Button, Trigger,
-  DeviceState, $cordovaToast) {
+  DeviceState, $cordovaToast, Helper) {
   var deviceState = new DeviceState(2, 8, true);
   $scope.buttonClicked = function(button) {
     button.trigger.isActive = !button.trigger.isActive;
@@ -41,7 +41,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
         deviceState.buttons = $rootScope.deviceState.buttons;
       })
       .error(function(error) {
-        $cordovaToast.showShortBottom(error, 400);
+        Helper.displayMessage(error);
         console.log(error);
       }
     );
@@ -68,13 +68,12 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
           function() {
           },
           function() { // undo our changes because the write failed
-            $cordovaToast.showShortBottom('Failed to send command to device',
-              400);
+            Helper.displayMessage('Failed to send command to device');
           }
         );
       },
       function() { //Undo our changes because we're not connected to wifi
-        $cordovaToast.showShortBottom('Connect to a device first', 400);
+        Helper.displayMessage('Connect to a device first');
       }
     );
   };
@@ -82,9 +81,6 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     canSwipe: true,
     showReorder: false,
     showDelete: false
-  };
-  $scope.editButton = function(buttonIndex) {
-    $cordovaToast.showShortBottom(buttonIndex, 400);
   };
   $scope.connectButton = {
     text: 'Connect',
@@ -95,12 +91,12 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
           function() {
             $cordovaBluetoothSerial.disconnect().then(
               function(success) {
-                $cordovaToast.showShortBottom('Disconnected!', 400);
+                Helper.displayMessage('Disconnected!');
                 $scope.connectButton.text = 'Connect';
                 $scope.connectButton.isDisabled = false;
               },
               function(error) {
-                $cordovaToast.showShortBottom(error, 400);
+                Helper.displayMessage(error);
                 $scope.connectButton.isDisabled = false;
               }
             );
@@ -111,12 +107,12 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
             $cordovaBluetoothSerial
               .connect($rootScope.deviceState.bluetoothDevice).then(
               function(success) {
-                $cordovaToast.showShortBottom('Connected!', 400);
+                Helper.displayMessage('Connected!');
                 $scope.connectButton.text = 'Disconnect';
                 $scope.connectButton.isDisabled = false;
               },
               function(error) {
-                $cordovaToast.showShortBottom(error, 400);
+                Helper.displayMessage(error);
                 $scope.connectButton.text = 'Connect';
                 $scope.connectButton.isDisabled = false;
               }
@@ -124,8 +120,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
           }
         );
       } else {
-        $cordovaToast.showShortBottom('Please select a bluetooth device first.',
-          400);
+        Helper.displayMessage('Please select a bluetooth device first.');
       }
     }
   };
@@ -141,7 +136,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
         $scope.bluetoothDevices = result;
       },
       function(error) {
-        $cordovaToast.showShortBottom(error, 400);
+        Helper.displayMessage(error);
         console.log(error);
       });
     }

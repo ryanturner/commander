@@ -1,4 +1,16 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['ionic'])
+.factory('Helper', function($cordovaToast) {
+  function Helper() {
+  }
+  Helper.displayMessage = function(message) {
+    if (ionic.Platform.platform() === 'linux') {
+      window.alert(message);
+    } else {
+      $cordovaToast.showShortBottom(message, 400);
+    }
+  };
+  return Helper;
+})
 
 .factory('DeviceState', function() {
   var ports;
