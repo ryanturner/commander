@@ -3,7 +3,8 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.1.1",
-    "angular-mocks": "1.4.3"
+    "angular-mocks": "1.4.3",
+    "ngCordovaMocks": "ng-cordova-mocks#~0.7.0"
   },
   "dependencies": {
     "ngCordova": "~0.1.23-alpha",

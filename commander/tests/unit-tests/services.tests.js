@@ -1,9 +1,17 @@
 describe('DeviceState', function() {
     beforeEach(module('starter.services'));
+    beforeEach(module('ngCordovaMocks'));
     var DeviceState;
-    beforeEach(inject(function(_DeviceState_) {
+    var Helper;
+    beforeEach(inject(function(_DeviceState_, _Helper_) {
       DeviceState = _DeviceState_
+      Helper = _Helper_
     }));
+    describe('test helper', function() {
+      it('should show an alert when on linux', function() {
+        
+      });
+    });
     describe('create a devicestate', function() {
         it('should call login on dinnerService', function() {
           firstPortNumber = 2;
@@ -14,5 +22,5 @@ describe('DeviceState', function() {
           expect(deviceState.numberOfPorts).toEqual(numberOfPorts);
           expect(deviceState.reverseLogic).toEqual(reverseLogic);
         });
-    })
+    });
 });
