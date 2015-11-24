@@ -9,6 +9,9 @@ var sh = require('shelljs');
 var gulp = require('gulp');
 var Server = require('karma').Server;
 var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
+var stylish = require('gulp-jscs-stylish');
+var noop = function () {};
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -63,5 +66,7 @@ gulp.task('test', function (done) {
 gulp.task('lint', function() {
   return gulp.src('./www/js/*.js')
     .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+//    .pipe(jscs())
+//    .pipe(stylish.combineWithHintResults())
+    .pipe(jshint.reporter('jshint-stylish'));
 });
