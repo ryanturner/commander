@@ -12,6 +12,9 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var stylish = require('gulp-jscs-stylish');
 var noop = function () {};
+var validate = require('gulp-html-angular-validate');
+var fail   = require('gulp-fail');
+var gulpIf = require('gulp-if');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -63,11 +66,27 @@ gulp.task('test', function (done) {
   }, done).start();
 });
 
-gulp.task('lint', function() {
+gulp.task('lint', ['lint-html'], function() {
+  var jscsFailed = false;
   return gulp.src('./www/js/*.js')
     .pipe(jshint())
-    .pipe(jscs())
+    .pipe(jscs()).on('error', function() {}) // noop function 
     .pipe(stylish.combineWithHintResults())
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'))
+    .pipe(gulpIf(function(file) {
+      return (file.jscs.errorCount > 0);
+    }, fail("JSCS exited with errors!", true)));
 });
 
+gulp.task('lint-html', function() {
+  var options = {
+    customattrs: ['*'],
+    customtags: ['*'],
+    relaxerror:['Bad value “Content-Security-Policy” for attribute “http-equiv” on element “meta”.'],
+    tmplext: 'tmpl.html',
+    emitError: true,
+  };
+  return gulp.src(['./www/templates/*.html', './www/index.html'])
+    .pipe(validate(options))
+});

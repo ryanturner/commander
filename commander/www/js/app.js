@@ -37,7 +37,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.tmpl.html'
   })
 
   // Each tab has its own nav history stack:
@@ -46,7 +46,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',
     url: '/dash',
     views: {
       'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
+        templateUrl: 'templates/tab-dash.tmpl.html',
         controller: 'DashCtrl'
       }
     }
@@ -56,7 +56,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',
     url: '/account',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
+        templateUrl: 'templates/tab-settings.tmpl.html',
         controller: 'SettingsCtrl'
       }
     }
@@ -66,7 +66,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',
     url: '/dash/:index',
     views: {
       'tab-dash': {
-        templateUrl: 'templates/edit-button.html',
+        templateUrl: 'templates/edit-button.tmpl.html',
         controller: 'EditButtonCtrl'
       }
     }

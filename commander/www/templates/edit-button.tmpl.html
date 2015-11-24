@@ -13,15 +13,15 @@
           </select>
         </label>
         <label class="item item-input item-select">
-          <span class="input-label">Buttons to Enable</span>{{button.trigger.activateButtons}} {{_.indexOf(button.trigger.activateButtons, 5)}}
+          <span class="input-label">Buttons to Enable</span>
           <select multiple ng-multiple="true">
             <option ng-repeat="selectButton in deviceState.buttons track by $index" value="{{ $index }}" ng-selected="button.trigger.activateButtons.indexOf($index) > -1">{{ selectButton.name }}</option>
           </select>
         </label>
         <label class="item item-input item-select">
           <span class="input-label">Buttons to Disable</span>
-          <select multiple ng-model="button.trigger.deactivateButtons" ng-multiple="true">
-            <option ng-repeat="selectButton in deviceState.buttons" value="{{ $index }}" ng-selected="_.indexOf(button.trigger.deactivateButtons, $index) > -1">{{ selectButton.name }}</option>
+          <select multiple ng-multiple="true">
+            <option ng-repeat="selectButton in deviceState.buttons track by $index" value="{{ $index }}" ng-selected="button.trigger.deactivateButtons.indexOf($index) > -1">{{ selectButton.name }}</option>
           </select>
         </label>
         <div class="item item-button">
