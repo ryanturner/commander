@@ -41,12 +41,10 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     deviceState.setPortsWithTrigger(button.trigger);
     _.each(button.trigger.activateButtons, function(buttonToActivate) {
       deviceState.buttons[buttonToActivate].trigger.isActive = button.trigger.isActive;
-      //deviceState.buttons[buttonToActivate].callback;
       deviceState.setPortsWithTrigger(deviceState.buttons[buttonToActivate].trigger);
     });
     _.each(button.trigger.deactivateButtons, function(buttonToDeactivate) {
       deviceState.buttons[buttonToDeactivate].trigger.isActive = !button.trigger.isActive;
-      //deviceState.buttons[buttonToActivate].callback;
       deviceState.setPortsWithTrigger(buttons[buttonToDeactivate].trigger);
     });
     console.log(deviceState.toString());
@@ -65,10 +63,6 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
       }
     );
   };
-//  $scope.$watch('buttons', function(newObject, oldObject) {
-//    deviceState.setPortsWithTriggers(_.map(newObject, function(val) { return val.trigger; }));
-//    console.log(deviceState.toString());
-//  }, true);
   $scope.listSettings = {
     canSwipe: true,
     showReorder: false,

@@ -8,6 +8,7 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var gulp = require('gulp');
 var Server = require('karma').Server;
+var jshint = require('gulp-jshint');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -57,4 +58,10 @@ gulp.task('test', function (done) {
     configFile: __dirname + '/tests/unit-tests.conf.js',
     singleRun: true
   }, done).start();
+});
+
+gulp.task('lint', function() {
+  return gulp.src('./www/js/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
 });
