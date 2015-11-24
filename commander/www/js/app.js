@@ -5,13 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'commander.models'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',
+  'commander.models'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+    if (window.cordova && window.cordova.plugins &&
+    window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
 
@@ -59,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-  
+
   .state('tab.button-details', {
     url: '/dash/:index',
     views: {
@@ -68,7 +70,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'EditButtonCtrl'
       }
     }
-  }); 
+  });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');

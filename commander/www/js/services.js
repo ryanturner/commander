@@ -7,7 +7,7 @@ angular.module('starter.services', [])
     this.numberOfPorts = numberOfPorts;
     this.reverseLogic = reverseLogic;
     this.ports = {};
-    for(i = firstPortPinNumber; i - firstPortPinNumber < numberOfPorts; i++) {
+    for (i = firstPortPinNumber; i - firstPortPinNumber < numberOfPorts; i++) {
       this.setPort(i, false);
     }
   }
@@ -31,16 +31,16 @@ angular.module('starter.services', [])
   DeviceState.prototype.removeButtonAtIndex = function(index) {
     _.each(this.buttons, function(button, i) {
       _.each(button.trigger.activateButtons, function(activateButton, j) {
-        if(activateButton > index) {
+        if (activateButton > index) {
           this.buttons[i].trigger.activateButtons[j]--;
-        } else if(activateButton == index) {
+        } else if (activateButton == index) {
           this.buttons[i].trigger.activateButtons.splice(j, 1);
         }
       }, this);
       _.each(button.trigger.deactivateButtons, function(deactivateButton, j) {
-        if(deactivateButton > index) {
+        if (deactivateButton > index) {
           this.buttons[i].trigger.deactivateButtons[j]--;
-        } else if(deactivateButton == index) {
+        } else if (deactivateButton == index) {
           this.buttons[i].trigger.deactivateButtons.splice(j, 1);
         }
       }, this);
