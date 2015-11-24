@@ -13,7 +13,7 @@
     <ion-list show-delete="listSettings.showDelete"
           show-reorder="listSettings.showReorder"
           can-swipe="listSettings.canSwipe">
-      <ion-item ng-repeat="button in deviceState.buttons" class="item">
+      <ion-item ng-repeat="button in deviceState.buttons" class="item" style="padding-right: 0 !important; margin-right: 0 !important;">
           <a class="button button-clear button-positive" href="#/tab/dash/{{ $index }}">{{button.name}}</a>
           <a class="button float-right" ng-class="{'button-assertive': button.trigger.isActive}" ng-click="buttonClicked(button)">
             <i class="icon ion-android-bulb"></i>

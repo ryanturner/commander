@@ -9,6 +9,7 @@ angular.module('starter.controllers', ['ngCordova', 'ui.router', 'underscore'])
     buttonTriggerChangedCallback(button);
   };
   $rootScope.deviceState = deviceState;
+  $rootScope._ = _;
   $ionicPlatform.ready(function() {
     $cordovaPreferences.fetch('deviceState')
       .success(function(value) {
