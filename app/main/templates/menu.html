@@ -5,7 +5,7 @@
 
     <!-- header bar -->
     <!-- the nav bar will be updated as we navigate between views -->
-    <ion-nav-bar class="bar-assertive">
+    <ion-nav-bar class="bar-positive">
       <!-- back button, shown if applicable -->
       <ion-nav-back-button>
       </ion-nav-back-button>
@@ -25,8 +25,8 @@
   <ion-side-menu side="left">
 
     <!-- menu header -->
-    <ion-header-bar class="bar-assertive">
-      <h1 class="title">Nav</h1>
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">{{ 'HEADLINE' | translate }}</h1>
     </ion-header-bar>
 
     <!-- menu content -->
@@ -37,6 +37,9 @@
         </ion-item>
         <ion-item menu-close ui-sref="main.debug">
           Debug
+        </ion-item>
+        <ion-item menu-close ui-sref="main.settings">
+          Settings
         </ion-item>
       </ion-list>
     </ion-content>
