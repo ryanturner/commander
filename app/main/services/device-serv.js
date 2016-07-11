@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.factory('Device', function ($log, $cordovaBluetoothSerial) {
+.factory('Device', function ($log) {
   var Device = {};
   var list = [
     {
@@ -17,14 +17,14 @@ angular.module('main')
     }
   ];
   var selectedDevice = list[0];
-  Device.get = function() {
+  Device.get = function () {
     return selectedDevice;
   };
-  Device.set = function(device) {
+  Device.set = function (device) {
     selectedDevice = device;
     $log.log(selectedDevice.name);
   };
-  Device.list = function() {
+  Device.list = function () {
     return list;
   };
   return Device;
