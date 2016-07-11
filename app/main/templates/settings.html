@@ -1,14 +1,15 @@
-<ion-view view-title="Mr. Yo">
+<ion-view view-title="{{ 'settings' | translate}}">
   <!-- do you want padding -->
   <ion-content class="padding">
+    <div class="list">
 
-    <!-- content goes here -->
-    <img ng-src="main/assets/images/yo@2x.png" style="width: 64px; height: 64px">
-    <p>
-      Hello My Name is Yo!<br>
-      I scaffold apps.<br>
-      And I'm really good at it.
-    </p>
+      <label class="item item-input item-select">
+        <div class="input-label" translate="device">
+        </div>
+        <select ng-options="device.name for device in devices" ng-model="device" ng-change="setDevice(device)">
+        </select>
+      </label>
 
+    </div>
   </ion-content>
 </ion-view>

@@ -4,10 +4,11 @@ angular.module('main', [
   'ngCordova',
   'ui.router',
   'ngLodash',
-  'pascalprecht.translate'
+  'pascalprecht.translate',
+  'ngCordova'
   // TODO: load other modules selected during generation
 ])
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
 
   // ROUTING with ui.router
   $urlRouterProvider.otherwise('/main/list');
@@ -55,4 +56,9 @@ angular.module('main', [
       }
     }
   });
+  $translateProvider.useStaticFilesLoader({
+    prefix: '../main/assets/languages/',
+    suffix: '.json'
+  });
+  $translateProvider.preferredLanguage('en');
 });
