@@ -5,7 +5,8 @@ angular.module('main', [
   'ui.router',
   'ngLodash',
   'pascalprecht.translate',
-  'ngCordova'
+  'ngCordova',
+  'LocalForageModule'
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
@@ -57,8 +58,11 @@ angular.module('main', [
     }
   });
   $translateProvider.useStaticFilesLoader({
-    prefix: '../main/assets/languages/',
+    prefix: 'main/assets/languages/',
     suffix: '.json'
   });
+  $translateProvider.registerAvailableLanguageKeys(['en'], {'en': 'en'});
   $translateProvider.preferredLanguage('en');
+  $translateProvider.fallbackLanguage('en');
+  $translateProvider.determinePreferredLanguage();
 });

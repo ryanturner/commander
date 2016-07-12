@@ -6,7 +6,7 @@
       <label class="item item-input item-select">
         <div class="input-label" translate="device">
         </div>
-        <select ng-options="device.name for device in devices" ng-model="device" ng-change="setDevice(device)">
+        <select ng-options="device.name for device in devices" ng-model="device" ng-change="setDevice(device.id)">
         </select>
       </label>
 

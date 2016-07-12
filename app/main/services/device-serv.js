@@ -1,31 +1,35 @@
 'use strict';
 angular.module('main')
-.factory('Device', function ($log) {
-  var Device = {};
-  var list = [
-    {
-      name: 'Test1',
-      uid: '123'
-    },
-    {
-      name: 'Test2',
-      uid: '123'
-    },
-    {
-      name: 'Test3',
-      uid: '123'
-    }
-  ];
-  var selectedDevice = list[0];
-  Device.get = function () {
-    return selectedDevice;
+.factory('Device', function ($log, $cordovaBluetoothSerial, lodash, $localForage, $q) {
+  var Device = {
+    list: []
   };
-  Device.set = function (device) {
-    selectedDevice = device;
-    $log.log(selectedDevice.name);
+  var selectedDeviceId;
+  Device.loadSelectedDevice = function () {
+    Device.fetchList();
+    $localForage.getItem('selectedDeviceId').then(function (data) {
+      selectedDeviceId = data;
+    });
   };
-  Device.list = function () {
-    return list;
+  Device.selected = function () {
+    return lodash.find(Device.list, { id: selectedDeviceId });
+  };
+  Device.set = function (id) {
+    $localForage.setItem('selectedDeviceId', id).then(function () {
+      selectedDeviceId = id;
+    });
+  };
+  Device.fetchList = function () {
+    return $q(function (resolve, reject) {
+      $cordovaBluetoothSerial.list().then(function (result) {
+        Device.list = result;
+        resolve(result);
+      },
+      function (error) {
+        $log.error(error);
+        reject(error);
+      });
+    });
   };
   return Device;
 });

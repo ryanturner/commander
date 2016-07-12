@@ -1,9 +1,12 @@
 'use strict';
 angular.module('main')
 .controller('SettingsCtrl', function ($scope, $log, Device) {
-  $scope.devices = Device.list();
-  $scope.device = Device.get();
+  Device.fetchList();
+  $scope.device = Device.selected();
   $scope.setDevice = Device.set;
-  $log.log('Hello from your Controller: SettingsCtrl in module main:. This is your controller:', this);
+
+  $scope.$watch( function () { return Device.list; }, function (data) {
+    $scope.devices = data;
+  }, true);
 
 });
